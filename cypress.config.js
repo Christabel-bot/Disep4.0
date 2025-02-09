@@ -9,9 +9,10 @@ return config;
 }
 
 module.exports = defineConfig({
+  projectId: 'k2cuq7',
         env: {username: "Christabel",
   password: "123456", url: "http://www.demoblaze.com/"},
-  projectId: "2en9j5",
+
         e2e: {
             experimentalRunAllSpecs:true,
           
