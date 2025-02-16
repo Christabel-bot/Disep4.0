@@ -1,19 +1,25 @@
-/// <reference types="Cypress" /> 
-/// <reference types="cypress-iframe" />
-
+/// <reference types="cypress" />​
+/// <reference types="cypress-iframe" />​
+import 'cypress-iframe';
 import { Given, When, Then } from "@badeball/cypress-cucumber-preprocessor";
+beforeEach( function(){ 
+    cy.fixture('example').then(function(data)
+    {
+        this.data = data 
+    })
+})
 
 Given ('I open the Ecommerce page and login', function(){
-    cy.visit(Cypress.env("url"))
+    cy.visit('http://www.demoblaze.com/')
     cy.get('#login2').click()
     cy.wait(2000)
-    cy.get('#loginusername').type(Cypress.env('Username'))
-    cy.get('#loginpassword').type(Cypress.env('Password'))
+    cy.get('#loginusername').type(this.data.username)
+    cy.get('#loginpassword').type(this.data.password)
     cy.get("button[onclick='logIn()']").click()
     cy.wait(3000)
 })
 When ('I click the PHONES CATEGORY button', function(){
-    cy.get('.list-group a:nth-child(2)').click()
+    cy.get('.list-group a:nth-child(2)').click({force: true})
     cy.wait(2000)
 })
 Then ('i select a product from the list of products displayed from PHONES category', function(){
@@ -41,7 +47,7 @@ Then ('if total price is displayed as expected', function(){
 })
 Then ('i fill out form to Place order', function(){
      cy.wait(2000)
-     cy.get('#name').type(this.data.Name)
+     cy.get('#name').type(this.data.name)
      cy.get('#country').type(this.data.Country)
      cy.get('#city').type(this.data.City)
      cy.get('#card').type(this.data.CreditCard)
@@ -93,22 +99,19 @@ When('validate if name, amount, card number and date displayed in order confirma
         cy.expect(name2).to.equal(this.data.Name)
     })**/
 })
-
 Then ('i validate if the cart is empty', function(){
-    cy.visit(Cypress.env("url"))
+    cy.visit('http://www.demoblaze.com/')
     cy.get('#login2').click()
     cy.wait(2000)
-    cy.get('#loginusername').type(Cypress.env('Username'))
-    cy.get('#loginpassword').type(Cypress.env('Password'))
+    cy.get('#loginusername').type(this.data.username)
+    cy.get('#loginpassword').type(this.data.username)
     cy.get("button[onclick='logIn()']").click()
     cy.wait(3000)
     cy.get('#cartur').click()
     cy.wait(3000)
     cy.get('tr').should('have.length', 1)
     cy.get('#logout2').click()
-    cy.wait(3000)
-})
-
+    cy.wait(3000)})
 When ('i navigate and select a product without category', function(){
     cy.get('.active > .nav-link').click()
     cy.wait(2000)
@@ -137,7 +140,7 @@ Then('i validate successfull purchase', function(){
 })
 
 Given ('I open the Ecommerce page', function(){
-    cy.visit(Cypress.env("url"))
+    cy.visit('http://www.demoblaze.com/')
     cy.wait(2000)
 })
 
